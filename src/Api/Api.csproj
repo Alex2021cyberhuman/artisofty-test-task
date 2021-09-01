@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Logic.DataAccess.Migrations.MsSql\Logic.DataAccess.Migrations.MsSql.csproj" />
+    <ProjectReference Include="..\Logic.DataAccess.Migrations.MySql\Logic.DataAccess.Migrations.MySql.csproj" />
+    <ProjectReference Include="..\Logic.DataAccess.Migrations.PostgreSql\Logic.DataAccess.Migrations.PostgreSql.csproj" />
+    <ProjectReference Include="..\Logic\Logic.csproj" />
+  </ItemGroup>
+
+</Project>
