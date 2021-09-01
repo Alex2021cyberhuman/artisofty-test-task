@@ -8,5 +8,5 @@
     <ItemGroup>
       <ProjectReference Include="..\Logic\Logic.csproj" />
     </ItemGroup>
-
+    
 </Project>

@@ -1,9 +1,12 @@
-﻿using Logic.Configuration;
+﻿using System;
+using Logic.Users.DataAccess.Database;
+using Logic.Users.DataAccess.Database.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
-namespace Logic.Users.DataAccess.Database
+namespace Api.Configuration
 {
     public class UserDesignTimeDbContextFactory : IDesignTimeDbContextFactory<UsersDbContext>
     {
@@ -14,7 +17,6 @@ namespace Logic.Users.DataAccess.Database
                 .Build();
             var options = new DatabaseOptions();
             configuration.Bind(options);
-
             var builder = new DbContextOptionsBuilder<UsersDbContext>()
                 .ConfigureProviderType(options)
                 .ConfigureDebugging(options);

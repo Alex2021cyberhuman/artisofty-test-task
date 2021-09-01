@@ -21,8 +21,8 @@ namespace Logic.Users.Models
         }
 
         public User() : this(
-            default, 
-            string.Empty, 
+            default,
+            string.Empty,
             string.Empty,
             string.Empty,
             string.Empty,

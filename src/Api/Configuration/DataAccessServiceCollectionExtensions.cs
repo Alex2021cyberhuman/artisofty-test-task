@@ -1,9 +1,10 @@
 ﻿using System;
-using Logic.Configuration;
 using Logic.Users.DataAccess.Database;
+using Logic.Users.DataAccess.Database.DbContexts;
 using Logic.Users.DataAccess.Interfaces;
 using Logic.Users.DataAccess.Mock;
 
+// ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class DataAccessServiceCollectionExtensions

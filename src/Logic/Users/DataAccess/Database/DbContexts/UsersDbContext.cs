@@ -2,7 +2,7 @@
 using Logic.Users.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Logic.Users.DataAccess.Database
+namespace Logic.Users.DataAccess.Database.DbContexts
 {
     public class UsersDbContext : DbContext
     {

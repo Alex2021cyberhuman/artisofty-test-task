@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Logic.Users.DataAccess.Database.DbContexts;
 using Logic.Users.DataAccess.Interfaces;
 using Logic.Users.Models;
 using Logic.Users.Utilities;
@@ -27,11 +28,15 @@ namespace Logic.Users.DataAccess.Database
             return entry.Entity;
         }
 
-        public async Task<bool> CheckUniquePhoneAsync(string phone, CancellationToken cancellationToken = default) =>
-            await UsersQueryable.AllAsync(user => user.Phone != phone, cancellationToken);
+        public async Task<bool> CheckUniquePhoneAsync(string phone, CancellationToken cancellationToken = default)
+        {
+            return await UsersQueryable.AllAsync(user => user.Phone != phone, cancellationToken);
+        }
 
-        public async Task<bool> CheckUniqueEmailAsync(string email, CancellationToken cancellationToken = default) =>
-            await UsersQueryable.AllAsync(user => user.Email != email, cancellationToken);
+        public async Task<bool> CheckUniqueEmailAsync(string email, CancellationToken cancellationToken = default)
+        {
+            return await UsersQueryable.AllAsync(user => user.Email != email, cancellationToken);
+        }
 
         public async Task<User?> TryLoginAsync(string phone, string password,
             CancellationToken cancellationToken = default)
@@ -46,7 +51,12 @@ namespace Logic.Users.DataAccess.Database
             return entry.Entity;
         }
 
-        public async Task<User?> FindUserByIdAsync(int id, CancellationToken cancellationToken = default) =>
-            await _context.Users.FindAsync(new object[] { id }, cancellationToken);
+        public async Task<User?> FindUserByIdAsync(int id, CancellationToken cancellationToken = default)
+        {
+            return await _context.Users.FindAsync(new object[]
+            {
+                id
+            }, cancellationToken);
+        }
     }
 }

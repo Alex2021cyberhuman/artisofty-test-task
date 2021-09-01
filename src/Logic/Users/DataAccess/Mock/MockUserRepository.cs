@@ -17,20 +17,22 @@ namespace Logic.Users.DataAccess.Mock
         public Task<User> CreateUserAsync(User user, CancellationToken cancellationToken = default)
         {
             if (user.Id == default)
-            {
                 user = GetUserWithNextId(user);
-            }
 
             return _dictionary.TryAdd(user.Id, user)
                 ? Task.FromResult(user)
                 : throw new InvalidOperationException("Cannot write to user dictionary");
         }
 
-        public Task<bool> CheckUniquePhoneAsync(string phone, CancellationToken cancellationToken = default) =>
-            Task.FromResult(_dictionary.Values.All(user => user.Phone != phone));
+        public Task<bool> CheckUniquePhoneAsync(string phone, CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult(_dictionary.Values.All(user => user.Phone != phone));
+        }
 
-        public Task<bool> CheckUniqueEmailAsync(string email, CancellationToken cancellationToken = default) =>
-            Task.FromResult(_dictionary.Values.All(user => user.Email != email));
+        public Task<bool> CheckUniqueEmailAsync(string email, CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult(_dictionary.Values.All(user => user.Email != email));
+        }
 
         public Task<User?> TryLoginAsync(string phone, string password,
             CancellationToken cancellationToken = default)
@@ -42,14 +44,18 @@ namespace Logic.Users.DataAccess.Mock
             _dictionary[user.Id] = user;
             return Task.FromResult<User?>(user);
         }
-        
-        public Task<User?> FindUserByIdAsync(int id, CancellationToken cancellationToken) =>
-            Task.FromResult(_dictionary.GetValueOrDefault(id));
 
-        private User GetUserWithNextId(User user) =>
-            user with
+        public Task<User?> FindUserByIdAsync(int id, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(_dictionary.GetValueOrDefault(id));
+        }
+
+        private User GetUserWithNextId(User user)
+        {
+            return user with
             {
                 Id = _dictionary.Keys.Max() + 1
             };
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Logic.Configuration
+﻿namespace Logic.Users.DataAccess.Database.DbContexts
 {
     public enum ProviderType
     {
