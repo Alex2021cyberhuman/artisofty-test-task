@@ -1,19 +1,35 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Logic.DataAccess.Migrations.MsSql\Logic.DataAccess.Migrations.MsSql.csproj" />
-    <ProjectReference Include="..\Logic.DataAccess.Migrations.MySql\Logic.DataAccess.Migrations.MySql.csproj" />
-    <ProjectReference Include="..\Logic.DataAccess.Migrations.PostgreSql\Logic.DataAccess.Migrations.PostgreSql.csproj" />
-    <ProjectReference Include="..\Logic\Logic.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Logic.DataAccess.Migrations.MsSql\Logic.DataAccess.Migrations.MsSql.csproj"/>
+        <ProjectReference Include="..\Logic.DataAccess.Migrations.MySql\Logic.DataAccess.Migrations.MySql.csproj"/>
+        <ProjectReference Include="..\Logic.DataAccess.Migrations.PostgreSql\Logic.DataAccess.Migrations.PostgreSql.csproj"/>
+        <ProjectReference Include="..\Logic\Logic.csproj"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1"/>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <_ContentIncludedByDefault Remove="Pages\Account\Register.cshtml"/>
+        <_ContentIncludedByDefault Remove="Pages\Account\Success.cshtml"/>
+        <_ContentIncludedByDefault Remove="Views\Home\Index.cshtml"/>
+        <_ContentIncludedByDefault Remove="Views\Home\Privacy.cshtml"/>
+        <_ContentIncludedByDefault Remove="Views\Shared\Error.cshtml"/>
+        <_ContentIncludedByDefault Remove="Views\Shared\_Layout.cshtml"/>
+        <_ContentIncludedByDefault Remove="Views\Shared\_ValidationScriptsPartial.cshtml"/>
+        <_ContentIncludedByDefault Remove="Views\_ViewImports.cshtml"/>
+        <_ContentIncludedByDefault Remove="Views\_ViewStart.cshtml"/>
+        <_ContentIncludedByDefault Remove="wwwroot\css\site.css"/>
+        <_ContentIncludedByDefault Remove="wwwroot\favicon.ico"/>
+        <_ContentIncludedByDefault Remove="wwwroot\js\site.js"/>
+    </ItemGroup>
 
 </Project>

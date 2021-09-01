@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Logic.Accounts.Models
+﻿namespace Logic.Accounts.Models
 {
     public record RegisterRequest
     {
@@ -12,9 +10,9 @@ namespace Logic.Accounts.Models
             Password = password;
             PasswordConfirm = passwordConfirm;
         }
-        
+
         public string FIO { get; init; }
-        
+
         public string Phone { get; init; }
 
         public string Email { get; init; }

@@ -9,7 +9,7 @@ namespace Logic.Accounts.Validation
     public class EmailUniqueAsyncValidator<T> : AsyncPropertyValidator<T, string>
     {
         public const string EmailUniqueAsyncValidatorName = "EmailUniqueAsyncValidator";
-        
+
         private readonly IUserRepository _userRepository;
 
         public EmailUniqueAsyncValidator(IUserRepository userRepository)
@@ -17,8 +17,10 @@ namespace Logic.Accounts.Validation
             _userRepository = userRepository;
         }
 
-        public override async Task<bool> IsValidAsync(ValidationContext<T> context, string value, CancellationToken cancellation) =>
-            await _userRepository.CheckUniqueEmailAsync(value, cancellation);
+        public override async Task<bool> IsValidAsync(ValidationContext<T> context, string value, CancellationToken cancellation)
+        {
+            return await _userRepository.CheckUniqueEmailAsync(value, cancellation);
+        }
 
         public override string Name => EmailUniqueAsyncValidatorName;
     }

@@ -1,5 +1,4 @@
 ﻿using System;
-using Logic.Users.DataAccess.Database;
 using Logic.Users.DataAccess.Database.DbContexts;
 using Logic.Users.DataAccess.Interfaces;
 using Logic.Users.DataAccess.Mock;
@@ -16,9 +15,7 @@ namespace Microsoft.Extensions.DependencyInjection
             optionsAction(dataAccessOptions);
 
             if (dataAccessOptions.UseDatabase)
-            {
                 throw new NotImplementedException("PostgreSqlUserRepository isn't implemented");
-            }
             serviceCollection.AddSingleton<IUserRepository, MockUserRepository>();
 
             return serviceCollection;

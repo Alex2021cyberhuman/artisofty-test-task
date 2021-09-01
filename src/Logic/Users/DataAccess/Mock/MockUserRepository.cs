@@ -34,15 +34,23 @@ namespace Logic.Users.DataAccess.Mock
             return Task.FromResult(_dictionary.Values.All(user => user.Email != email));
         }
 
-        public Task<User?> TryLoginAsync(string phone, string password,
+        public Task<User?> FindUserByPhonePasswordAsync(string phone, string password,
             CancellationToken cancellationToken = default)
         {
             var user = _dictionary.Values.FirstOrDefault(user => user.Phone == phone && user.Password == password);
+            return user is null
+                ? Task.FromResult<User?>(null)
+                : Task.FromResult<User?>(user);
+        }
+
+        public Task UpdateLastLoginAsync(int userId, DateTime lastLogin, CancellationToken cancellationToken = default)
+        {
+            var user = _dictionary.GetValueOrDefault(userId);
             if (user is null)
-                return Task.FromResult<User?>(null);
+                return Task.CompletedTask;
             user = UserMutationHelper.GetUserWithUpdatedLastLogin(DateTime.UtcNow, user);
             _dictionary[user.Id] = user;
-            return Task.FromResult<User?>(user);
+            return Task.CompletedTask;
         }
 
         public Task<User?> FindUserByIdAsync(int id, CancellationToken cancellationToken)

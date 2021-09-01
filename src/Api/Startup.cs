@@ -1,5 +1,6 @@
 using System.Reflection;
 using FluentValidation;
+using Logic.Accounts;
 using Logic.Accounts.Mapping;
 using Logic.Accounts.Validation;
 using Microsoft.AspNetCore.Builder;
@@ -22,13 +23,18 @@ namespace Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllers();
 
             services.AddDataAccessServices(options => _configuration.Bind("DataAccess", options));
 
             services.AddAutoMapper(typeof(AccountsProfile).Assembly, Assembly.GetExecutingAssembly());
 
-            services.AddValidatorsFromAssemblies(new[] {typeof(RegisterRequestValidator).Assembly});
+            services.AddValidatorsFromAssemblies(new[]
+            {
+                typeof(RegisterRequestValidator).Assembly
+            });
+
+            services.AddScoped<AccountManager>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -40,11 +46,8 @@ namespace Api
             else
             {
                 app.UseHttpsRedirection();
-                app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-            
-            app.UseStaticFiles();
 
             app.UseRouting();
 
@@ -53,9 +56,7 @@ namespace Api
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    "default",
-                    "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllers();
             });
         }
     }
