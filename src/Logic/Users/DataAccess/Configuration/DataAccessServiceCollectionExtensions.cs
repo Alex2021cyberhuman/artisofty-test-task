@@ -17,17 +17,9 @@ namespace Microsoft.Extensions.DependencyInjection
 
             if (dataAccessOptions.UseDatabase)
             {
-                var databaseOptions = dataAccessOptions.DatabaseOptions;
-                serviceCollection
-                    .AddDbContext<UsersDbContext>(builder => builder
-                        .ConfigureProviderType(databaseOptions)
-                        .ConfigureDebugging(databaseOptions));
-                serviceCollection.AddScoped<IUserRepository, EfUserRepository>();
+                throw new NotImplementedException("PostgreSqlUserRepository isn't implemented");
             }
-            else
-            {
-                serviceCollection.AddSingleton<IUserRepository, MockUserRepository>();
-            }
+            serviceCollection.AddSingleton<IUserRepository, MockUserRepository>();
 
             return serviceCollection;
         }
