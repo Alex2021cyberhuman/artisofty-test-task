@@ -1,5 +1,5 @@
 ﻿using System;
-using Logic.Users.DataAccess.Database.DbContexts;
+using Logic.Users.DataAccess.Configuration;
 using Logic.Users.DataAccess.Interfaces;
 using Logic.Users.DataAccess.Mock;
 

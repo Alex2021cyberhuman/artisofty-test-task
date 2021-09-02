@@ -37,10 +37,10 @@ namespace Logic.Users.DataAccess.Mock
         public Task<User?> FindUserByPhonePasswordAsync(string phone, string password,
             CancellationToken cancellationToken = default)
         {
-            var user = _dictionary.Values.FirstOrDefault(user => user.Phone == phone && user.Password == password);
-            return user is null
+            var foundUser = _dictionary.Values.FirstOrDefault(user => user.Phone == phone && user.Password == password);
+            return foundUser is null
                 ? Task.FromResult<User?>(null)
-                : Task.FromResult<User?>(user);
+                : Task.FromResult<User?>(foundUser);
         }
 
         public Task UpdateLastLoginAsync(int userId, DateTime lastLogin, CancellationToken cancellationToken = default)
@@ -62,7 +62,7 @@ namespace Logic.Users.DataAccess.Mock
         {
             return user with
             {
-                Id = _dictionary.Keys.Max() + 1
+                Id = _dictionary.Any() ? _dictionary.Keys.Max() + 1 : 1
             };
         }
     }

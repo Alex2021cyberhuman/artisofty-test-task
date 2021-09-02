@@ -1,9 +1,11 @@
-﻿using Api.Authorization;
+﻿using Logic.Accounts.Configuration;
+using Logic.Accounts.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Api.Authorization.Configuration
 {
     public static class AuthorizationServiceCollectionExtensions
     {
@@ -16,6 +18,9 @@ namespace Microsoft.Extensions.DependencyInjection
 
             return services.Configure<JwtWriteOptions>(options =>
                     configuration.Bind("JwtWriteOptions", options))
+                .AddHttpContextAccessor()
+                .AddScoped<IAuthenticatedUserIdentifierProvider, ClaimIdentifierProvider>()
+                .AddScoped<IClaimsFactory, ClaimsFactory>()
                 .AddAccountsServices<JwtLoginProcessor>()
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

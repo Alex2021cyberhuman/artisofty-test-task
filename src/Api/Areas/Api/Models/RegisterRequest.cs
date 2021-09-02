@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Logic.Users.Options;
 
-namespace Api.Controllers
+namespace Api.Areas.Api.Models
 {
-    public class RegisterInputModel
+    public class RegisterRequest
     {
         [Required]
         [StringLength(UserConfigurationOptions.UserFIOMaxLength)]

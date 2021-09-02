@@ -4,7 +4,7 @@ using Logic.Users.Options;
 
 namespace Logic.Accounts.Validation
 {
-    public class LoginRequestValidator : AbstractValidator<LoginRequest>
+    public class LoginRequestValidator : AbstractValidator<LoginModel>
     {
         public LoginRequestValidator()
         {

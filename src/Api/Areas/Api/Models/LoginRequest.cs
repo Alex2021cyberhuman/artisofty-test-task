@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Logic.Users.Options;
 
-namespace Api.Controllers
+namespace Api.Areas.Api.Models
 {
-    public class LoginInputModel
+    public class LoginRequest
     {
         [Required]
         [StringLength(UserConfigurationOptions.UserPhoneMaxLength)]

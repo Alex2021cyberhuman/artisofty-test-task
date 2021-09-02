@@ -1,4 +1,6 @@
 using System.Reflection;
+using Api.Areas.Api.Mapping;
+using Api.Authorization.Configuration;
 using FluentValidation;
 using Logic.Accounts;
 using Logic.Accounts.Mapping;

@@ -1,32 +1,53 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Api.Areas.Api.Models;
 using Api.Authorization;
-using Api.Controllers;
 using AutoMapper;
-using Logic.Accounts;
-using Logic.Accounts.Models;
+using Logic.Accounts.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 
 namespace Api.Areas.Api
 {
     [ApiController]
-    [ApiVersion("1.0")]
     [Route("api/account")]
     public class AccountApiController : ControllerBase
     {
-        private readonly AccountManager _accountManager;
+        private readonly IAccountManager _accountManager;
         private readonly IMapper _mapper;
 
-        public AccountApiController(AccountManager accountManager, IMapper mapper)
+        public AccountApiController(IAccountManager accountManager, IMapper mapper)
         {
             _accountManager = accountManager;
             _mapper = mapper;
         }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterInputModel model, CancellationToken cancellationToken = default)
+        [Authorize]
+        [HttpGet("get-my-info")]
+        public async Task<IActionResult> GetMyInfo(CancellationToken cancellationToken)
         {
-            var registerRequest = _mapper.Map<RegisterRequest>(model);
+            var userInfo = await _accountManager.GetUserInfoAsync(cancellationToken);
+            if (userInfo is null)
+                return Unauthorized();
+            var model = _mapper.Map<UserInfoResponse>(userInfo);
+            return Ok(model);
+        }
+        
+        [Authorize]
+        [HttpPost("logout")]
+        // TODO: Make refresh tokens
+        public IActionResult Logout()
+        {
+            var response = HttpContext.Response;
+            response.Headers.Authorization = StringValues.Empty;
+            return Ok();
+        }
+        
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(RegisterRequest model, CancellationToken cancellationToken = default)
+        {
+            var registerRequest = _mapper.Map<Logic.Accounts.Models.RegisterModel>(model);
             var result = await _accountManager.RegisterAsync(registerRequest, cancellationToken);
             if (result.IsSuccessful)
                 return Ok();
@@ -38,9 +59,9 @@ namespace Api.Areas.Api
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginInputModel model, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> Login(LoginRequest model, CancellationToken cancellationToken = default)
         {
-            var loginRequest = _mapper.Map<LoginRequest>(model);
+            var loginRequest = _mapper.Map<Logic.Accounts.Models.LoginModel>(model);
             var result = await _accountManager.LoginAsync(loginRequest, cancellationToken);
 
             if (result.IsSuccessful
