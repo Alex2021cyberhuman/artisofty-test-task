@@ -8,17 +8,24 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class DataAccessServiceCollectionExtensions
     {
-        public static IServiceCollection AddDataAccessServices(this IServiceCollection serviceCollection, Action<DataAccessOptions>? optionsAction)
+        public static IServiceCollection AddDataAccessServices(this IServiceCollection services, Action<DataAccessOptions>? optionsAction)
         {
             optionsAction ??= _ => { };
             var dataAccessOptions = DataAccessOptions.Default;
+            services.Configure<DataAccessOptions>(options => optionsAction(options));
             optionsAction(dataAccessOptions);
 
+            
             if (dataAccessOptions.UseDatabase)
-                throw new NotImplementedException("PostgreSqlUserRepository isn't implemented");
-            serviceCollection.AddSingleton<IUserRepository, MockUserRepository>();
+            {
+                services.AddDatabaseDataAccessServices(dataAccessOptions);
+            }
+            else
+            {
+                services.AddSingleton<IUserRepository, MockUserRepository>();
+            }
 
-            return serviceCollection;
+            return services;
         }
     }
 }
