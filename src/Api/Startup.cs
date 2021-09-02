@@ -34,7 +34,7 @@ namespace Api
                 typeof(RegisterRequestValidator).Assembly
             });
 
-            services.AddScoped<AccountManager>();
+            services.AddCustomAuthorization(_configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

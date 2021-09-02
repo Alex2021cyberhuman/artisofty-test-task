@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Api.Authorization;
 using Api.Controllers;
 using AutoMapper;
 using Logic.Accounts;
@@ -42,8 +43,9 @@ namespace Api.Areas.Api
             var loginRequest = _mapper.Map<LoginRequest>(model);
             var result = await _accountManager.LoginAsync(loginRequest, cancellationToken);
 
-            if (result.IsSuccessful)
-                return Ok();
+            if (result.IsSuccessful
+                && result is JwtLoginResult jwtLoginResult)
+                return Ok(jwtLoginResult);
 
             return BadRequest(new
             {

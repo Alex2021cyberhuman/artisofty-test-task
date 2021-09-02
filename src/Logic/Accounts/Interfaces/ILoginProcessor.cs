@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Logic.Accounts.Models;
 using Logic.Users.Models;
 
 namespace Logic.Accounts.Interfaces
@@ -14,6 +15,6 @@ namespace Logic.Accounts.Interfaces
         /// <param name="user"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task ProcessLoginAsync(User user, CancellationToken cancellationToken = default);
+        Task<LoginResult> ProcessLoginAsync(User user, CancellationToken cancellationToken = default);
     }
 }

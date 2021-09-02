@@ -19,7 +19,7 @@ namespace Logic.Accounts
         private readonly IMapper _mapper;
         private readonly ILoginProcessor _loginProcessor;
 
-        private static LoginResult AuthorizationError => new()
+        private static LoginErrorResult AuthorizationError => new()
         {
             Code = "AuthorizationError", Message = "Error of authorization. It may wrong password or phone"
         };
@@ -68,8 +68,7 @@ namespace Logic.Accounts
                 LastLogin = DateTime.UtcNow
             };
             await _userRepository.UpdateLastLoginAsync(user.Id, user.LastLogin, cancellationToken);
-            await _loginProcessor.ProcessLoginAsync(user, cancellationToken);
-            return new(user);
+            return await _loginProcessor.ProcessLoginAsync(user, cancellationToken);
         }
     }
 }
