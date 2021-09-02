@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading;
@@ -8,7 +7,6 @@ using Logic.Accounts.Interfaces;
 using Logic.Accounts.Models;
 using Logic.Users.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 

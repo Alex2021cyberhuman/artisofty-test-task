@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using FluentValidation;
+﻿using FluentValidation;
 using Logic.Accounts.Models;
 using Logic.Users.DataAccess.Interfaces;
 using Logic.Users.Options;
