@@ -2,10 +2,14 @@
 using System.Threading.Tasks;
 using Api.Areas.Api.Models;
 using Api.Authorization;
+using Api.Authorization.Interfaces;
 using AutoMapper;
 using Logic.Accounts.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 
 namespace Api.Areas.Api
@@ -16,14 +20,18 @@ namespace Api.Areas.Api
     {
         private readonly IAccountManager _accountManager;
         private readonly IMapper _mapper;
+        private readonly IJwtLoginProcessor _processor;
+        private readonly JwtWriteOptions _jwtWriteOptions;
 
-        public AccountApiController(IAccountManager accountManager, IMapper mapper)
+        public AccountApiController(IAccountManager accountManager, IMapper mapper, IJwtLoginProcessor processor, IOptions<JwtWriteOptions> jwtOptionsHolder)
         {
             _accountManager = accountManager;
             _mapper = mapper;
+            _processor = processor;
+            _jwtWriteOptions = jwtOptionsHolder.Value;
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("get-my-info")]
         public async Task<IActionResult> GetMyInfo(CancellationToken cancellationToken)
         {
@@ -34,13 +42,12 @@ namespace Api.Areas.Api
             return Ok(model);
         }
         
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("logout")]
-        // TODO: Make refresh tokens
         public IActionResult Logout()
         {
-            var response = HttpContext.Response;
-            response.Headers.Authorization = StringValues.Empty;
+            var cookies = HttpContext.Response.Cookies;
+            cookies.Delete(_jwtWriteOptions.AccessTokenCookieName, _jwtWriteOptions.CookieOptions);
             return Ok();
         }
         
@@ -64,9 +71,13 @@ namespace Api.Areas.Api
             var loginRequest = _mapper.Map<Logic.Accounts.Models.LoginModel>(model);
             var result = await _accountManager.LoginAsync(loginRequest, cancellationToken);
 
-            if (result.IsSuccessful
-                && result is JwtLoginResult jwtLoginResult)
-                return Ok(jwtLoginResult);
+            if (result is { IsSuccessful: true, User: not null })
+            {
+                var jwtResult = await _processor.ProcessLoginAsync(result.User, cancellationToken);
+                var cookies = HttpContext.Response.Cookies;
+                cookies.Append(_jwtWriteOptions.AccessTokenCookieName, jwtResult.AccessToken, _jwtWriteOptions.CookieOptions);
+                return Ok();
+            }
 
             return BadRequest(new
             {

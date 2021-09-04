@@ -2,5 +2,5 @@
 
 namespace Logic.Accounts.Models
 {
-    public abstract record LoginResult(User? User = null) : AccountResult;
+    public record LoginResult(User? User = null) : AccountResult;
 }

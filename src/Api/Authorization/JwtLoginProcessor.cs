@@ -3,8 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
-using Logic.Accounts.Interfaces;
-using Logic.Accounts.Models;
+using Api.Authorization.Interfaces;
 using Logic.Users.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
@@ -12,7 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Api.Authorization
 {
-    public class JwtLoginProcessor : ILoginProcessor
+    public class JwtLoginProcessor : IJwtLoginProcessor
     {
         private readonly IClaimsFactory _claimsFactory;
         private readonly JwtWriteOptions _options;
@@ -23,7 +22,7 @@ namespace Api.Authorization
             _options = options.Value;
         }
 
-        public async Task<LoginResult> ProcessLoginAsync(User user, CancellationToken cancellationToken = default)
+        public async Task<JwtLoginResult> ProcessLoginAsync(User user, CancellationToken cancellationToken = default)
         {
             var claims = await _claimsFactory.GetClaims(user, cancellationToken);
             var claimsIdentity = new ClaimsIdentity(
@@ -43,10 +42,7 @@ namespace Api.Authorization
                 signingCredentials);
             var securityTokenHandler = new JwtSecurityTokenHandler();
             var accessToken = securityTokenHandler.WriteToken(securityToken);
-            return new JwtLoginResult(accessToken)
-            {
-                User = user
-            };
+            return new(accessToken);
         }
     }
 }

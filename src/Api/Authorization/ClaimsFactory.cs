@@ -12,8 +12,7 @@ namespace Api.Authorization
         public Task<IEnumerable<Claim>> GetClaims(User user, CancellationToken cancellationToken = default) =>
             Task.FromResult(new Claim[]
             {
-                new(ClaimTypes.NameIdentifier, user.Id.ToString()), new(ClaimTypes.Name, user.FIO), new(ClaimTypes.Email, user.Email),
-                new(ClaimTypes.MobilePhone, user.Phone)
+                new(ClaimTypes.NameIdentifier, user.Id.ToString())
             }.AsEnumerable());
     }
 }

@@ -17,10 +17,9 @@ namespace Logic.Accounts
         private readonly IValidator<RegisterModel> _registerRequestValidator;
         private readonly IValidator<LoginModel> _loginRequestValidator;
         private readonly IMapper _mapper;
-        private readonly ILoginProcessor _loginProcessor;
         private readonly IAuthenticatedUserIdentifierProvider _identifierProvider;
 
-        private static LoginErrorResult AuthorizationError => new()
+        private static LoginResult AuthenticationError => new()
         {
             Code = "AuthorizationError", Message = "Error of authorization. It may wrong password or phone"
         };
@@ -30,14 +29,12 @@ namespace Logic.Accounts
             IValidator<RegisterModel> registerRequestValidator,
             IValidator<LoginModel> loginRequestValidator,
             IMapper mapper,
-            ILoginProcessor loginProcessor,
             IAuthenticatedUserIdentifierProvider identifierProvider)
         {
             _userRepository = userRepository;
             _registerRequestValidator = registerRequestValidator;
             _loginRequestValidator = loginRequestValidator;
             _mapper = mapper;
-            _loginProcessor = loginProcessor;
             _identifierProvider = identifierProvider;
         }
 
@@ -61,17 +58,17 @@ namespace Logic.Accounts
         {
             var result = await _loginRequestValidator.ValidateAsync(model, cancellationToken);
             if (!result.IsValid)
-                return AuthorizationError;
+                return AuthenticationError;
             var user = await _userRepository.FindUserByPhonePasswordAsync(model.Phone, model.Password, cancellationToken);
             if (user is null)
-                return AuthorizationError;
+                return AuthenticationError;
 
             user = user with
             {
                 LastLogin = DateTime.UtcNow
             };
             await _userRepository.UpdateLastLoginAsync(user.Id, user.LastLogin, cancellationToken);
-            return await _loginProcessor.ProcessLoginAsync(user, cancellationToken);
+            return new(user);
         }
 
         public async Task<User?> GetUserInfoAsync(CancellationToken cancellationToken = default)

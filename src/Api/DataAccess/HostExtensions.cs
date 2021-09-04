@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Dapper;
 using FluentMigrator.Runner;
 using Logic.Users.DataAccess.Configuration;
 using Logic.Users.DataAccess.Database.Commands;
