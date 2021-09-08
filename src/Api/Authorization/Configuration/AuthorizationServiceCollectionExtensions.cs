@@ -1,14 +1,13 @@
 ﻿using System.Threading.Tasks;
+using Api.Authorization;
 using Api.Authorization.Interfaces;
-using Logic.Accounts.Configuration;
 using Logic.Accounts.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace Api.Authorization.Configuration
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class AuthorizationServiceCollectionExtensions
     {
@@ -58,7 +57,6 @@ namespace Api.Authorization.Configuration
                 context.Token = accessTokenValue;
                 return Task.CompletedTask;
             }
-            context.Fail("cannot get access token cookie");
             return Task.CompletedTask;
         }
     }

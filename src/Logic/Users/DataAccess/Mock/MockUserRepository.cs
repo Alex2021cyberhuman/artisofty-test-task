@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Logic.Users.DataAccess.Interfaces;
 using Logic.Users.Models;
-using Logic.Users.Utilities;
 
 namespace Logic.Users.DataAccess.Mock
 {
@@ -48,7 +47,10 @@ namespace Logic.Users.DataAccess.Mock
             var user = _dictionary.GetValueOrDefault(userId);
             if (user is null)
                 return Task.CompletedTask;
-            user = UserMutationHelper.GetUserWithUpdatedLastLogin(DateTime.UtcNow, user);
+            user = user with
+            {
+                LastLogin = DateTime.UtcNow
+            };
             _dictionary[user.Id] = user;
             return Task.CompletedTask;
         }

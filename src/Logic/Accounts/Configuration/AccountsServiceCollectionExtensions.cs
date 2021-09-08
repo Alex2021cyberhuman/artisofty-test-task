@@ -1,7 +1,7 @@
-﻿using Logic.Accounts.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Logic.Accounts;
+using Logic.Accounts.Interfaces;
 
-namespace Logic.Accounts.Configuration
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class AccountsServiceCollectionExtensions
     {

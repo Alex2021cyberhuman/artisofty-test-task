@@ -20,7 +20,7 @@ namespace Logic.Users.DataAccess.Database.FluentMigrations
                 .AsString(UserConfigurationOptions.UserFIOMaxLength + 1)
                 .NotNullable()
                 .WithColumn(Phone)
-                .AsFixedLengthAnsiString(UserConfigurationOptions.UserPhoneMaxLength + 1)
+                .AsFixedLengthAnsiString(UserConfigurationOptions.UserPhoneMaxLength)
                 .NotNullable()
                 .Unique()
                 .WithColumn(Email)

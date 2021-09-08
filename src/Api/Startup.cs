@@ -1,5 +1,4 @@
 using System.Reflection;
-using Api.Authorization.Configuration;
 using FluentValidation;
 using Logic.Accounts.Mapping;
 using Logic.Accounts.Validation;
@@ -35,6 +34,8 @@ namespace Api
             });
 
             services.AddCustomAuthorization(_configuration);
+
+            services.AddCustomSwagger();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -47,16 +48,16 @@ namespace Api
             {
                 app.UseHsts();
             }
-            
+
+            app.UseSwagger();
+            app.UseSwaggerUI(options => { options.SwaggerEndpoint("v1/swagger.json", "TestBack v1"); });
+
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

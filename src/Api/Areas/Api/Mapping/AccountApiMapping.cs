@@ -1,5 +1,8 @@
-﻿using Api.Areas.Api.Models;
+﻿using System;
+using Api.Areas.Api.Models;
+using Api.Authorization;
 using AutoMapper;
+using Logic.Accounts.Models;
 using Logic.Users.Models;
 
 namespace Api.Areas.Api.Mapping
@@ -8,9 +11,14 @@ namespace Api.Areas.Api.Mapping
     {
         public AccountApiMapping()
         {
-            CreateMap<LoginRequest, Logic.Accounts.Models.LoginModel>();
-            CreateMap<RegisterRequest, Logic.Accounts.Models.RegisterModel>();
+            CreateMap<LoginRequest, LoginModel>();
+            CreateMap<RegisterRequest, RegisterModel>();
             CreateMap<User, UserInfoResponse>();
+            CreateMap<AccountResult, ErrorResponse>();
+            CreateMap<JwtLoginResult, TokenResponse>()
+                .ForMember(tokenResponse => tokenResponse.Expires,
+                    options => options.MapFrom(
+                        jwtLoginResult => new DateTimeOffset(jwtLoginResult.Expires).ToUnixTimeSeconds()));
         }
     }
 }

@@ -42,7 +42,7 @@ namespace Api.Authorization
                 signingCredentials);
             var securityTokenHandler = new JwtSecurityTokenHandler();
             var accessToken = securityTokenHandler.WriteToken(securityToken);
-            return new(accessToken);
+            return new(accessToken, expires);
         }
     }
 }
