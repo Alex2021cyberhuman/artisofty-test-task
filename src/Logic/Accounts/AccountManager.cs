@@ -17,11 +17,14 @@ namespace Logic.Accounts
         private readonly IValidator<RegisterModel> _registerRequestValidator;
         private readonly IValidator<LoginModel> _loginRequestValidator;
         private readonly IMapper _mapper;
-        private readonly IAuthenticatedUserIdentifierProvider _identifierProvider;
+
+        private readonly IAuthenticatedUserIdentifierProvider
+            _identifierProvider;
 
         private static LoginResult AuthenticationError => new()
         {
-            Code = "AuthorizationError", Message = "Error of authorization. It may wrong password or phone"
+            Code = "AuthorizationError",
+            Message = "Error of authorization. It may wrong password or phone"
         };
 
         public AccountManager(
@@ -38,9 +41,12 @@ namespace Logic.Accounts
             _identifierProvider = identifierProvider;
         }
 
-        public async Task<AccountResult> RegisterAsync(RegisterModel model, CancellationToken cancellationToken = default)
+        public async Task<AccountResult> RegisterAsync(RegisterModel model,
+            CancellationToken cancellationToken = default)
         {
-            var validationResult = await _registerRequestValidator.ValidateAsync(model, cancellationToken);
+            var validationResult =
+                await _registerRequestValidator.ValidateAsync(model,
+                    cancellationToken);
             if (!validationResult.IsValid)
             {
                 var error = validationResult.Errors.First();
@@ -54,12 +60,17 @@ namespace Logic.Accounts
             return new();
         }
 
-        public async Task<LoginResult> LoginAsync(LoginModel model, CancellationToken cancellationToken = default)
+        public async Task<LoginResult> LoginAsync(LoginModel model,
+            CancellationToken cancellationToken = default)
         {
-            var result = await _loginRequestValidator.ValidateAsync(model, cancellationToken);
+            var result =
+                await _loginRequestValidator.ValidateAsync(model,
+                    cancellationToken);
             if (!result.IsValid)
                 return AuthenticationError;
-            var user = await _userRepository.FindUserByPhonePasswordAsync(model.Phone, model.Password, cancellationToken);
+            var user =
+                await _userRepository.FindUserByPhonePasswordAsync(model.Phone,
+                    model.Password, cancellationToken);
             if (user is null)
                 return AuthenticationError;
 
@@ -67,14 +78,18 @@ namespace Logic.Accounts
             {
                 LastLogin = DateTime.UtcNow
             };
-            await _userRepository.UpdateLastLoginAsync(user.Id, user.LastLogin, cancellationToken);
+            await _userRepository.UpdateLastLoginAsync(user.Id, user.LastLogin,
+                cancellationToken);
             return new(user);
         }
 
-        public async Task<User?> GetUserInfoAsync(CancellationToken cancellationToken = default)
+        public async Task<User?> GetUserInfoAsync(
+            CancellationToken cancellationToken = default)
         {
-            var userId = await _identifierProvider.GetUserIdAsync(cancellationToken);
-            return await _userRepository.FindUserByIdAsync(userId, cancellationToken);
+            var userId =
+                await _identifierProvider.GetUserIdAsync(cancellationToken);
+            return await _userRepository.FindUserByIdAsync(userId,
+                cancellationToken);
         }
     }
 }

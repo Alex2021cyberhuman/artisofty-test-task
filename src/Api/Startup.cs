@@ -1,4 +1,5 @@
 using System.Reflection;
+using Api.Authorization.Configuration;
 using FluentValidation;
 using Logic.Accounts.Mapping;
 using Logic.Accounts.Validation;
@@ -24,9 +25,11 @@ namespace Api
         {
             services.AddControllers();
 
-            services.AddDataAccessServices(options => _configuration.Bind("DataAccess", options));
+            services.AddDataAccessServices(options =>
+                _configuration.Bind("DataAccess", options));
 
-            services.AddAutoMapper(typeof(AccountsProfile).Assembly, Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(typeof(AccountsProfile).Assembly,
+                Assembly.GetExecutingAssembly());
 
             services.AddValidatorsFromAssemblies(new[]
             {
@@ -41,23 +44,28 @@ namespace Api
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
             else
-            {
                 app.UseHsts();
-            }
 
             app.UseSwagger();
-            app.UseSwaggerUI(options => { options.SwaggerEndpoint("v1/swagger.json", "TestBack v1"); });
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("v1/swagger.json", "TestBack v1");
+            });
 
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "MyArea",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllers();
+            });
         }
     }
 }

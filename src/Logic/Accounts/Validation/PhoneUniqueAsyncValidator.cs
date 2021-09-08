@@ -6,9 +6,11 @@ using Logic.Users.DataAccess.Interfaces;
 
 namespace Logic.Accounts.Validation
 {
-    public class PhoneUniqueAsyncValidator<T> : AsyncPropertyValidator<T, string>
+    public class
+        PhoneUniqueAsyncValidator<T> : AsyncPropertyValidator<T, string>
     {
-        public const string PhoneUniqueAsyncValidatorName = "PhoneUniqueAsyncValidator";
+        public const string PhoneUniqueAsyncValidatorName =
+            "PhoneUniqueAsyncValidator";
 
         private readonly IUserRepository _userRepository;
 
@@ -22,9 +24,12 @@ namespace Logic.Accounts.Validation
             return "{PropertyName} must be unique.";
         }
 
-        public override async Task<bool> IsValidAsync(ValidationContext<T> context, string value, CancellationToken cancellation)
+        public override async Task<bool> IsValidAsync(
+            ValidationContext<T> context, string value,
+            CancellationToken cancellation)
         {
-            return await _userRepository.CheckUniquePhoneAsync(value, cancellation);
+            return await _userRepository.CheckUniquePhoneAsync(value,
+                cancellation);
         }
 
 

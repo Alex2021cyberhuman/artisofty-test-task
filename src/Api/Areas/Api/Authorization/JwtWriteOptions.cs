@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Api.Authorization
+namespace Api.Areas.Api.Authorization
 {
     public class JwtWriteOptions
     {
@@ -26,9 +26,11 @@ namespace Api.Authorization
             }
         }
 
-        public string AccessTokenCookieName { get; set; } = "TestBack.AccessToken";
+        public string AccessTokenCookieName { get; set; } =
+            "TestBack.AccessToken";
 
-        public SymmetricSecurityKey SymmetricSecurityKey => new(Encoding.ASCII.GetBytes(SecurityKey));
+        public SymmetricSecurityKey SymmetricSecurityKey =>
+            new(Encoding.ASCII.GetBytes(SecurityKey));
 
         public CookieOptions CookieOptions { get; set; } = new();
 

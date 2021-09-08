@@ -7,8 +7,13 @@ namespace Logic.Accounts.Interfaces
 {
     public interface IAccountManager
     {
-        Task<AccountResult> RegisterAsync(RegisterModel model, CancellationToken cancellationToken = default);
-        Task<LoginResult> LoginAsync(LoginModel model, CancellationToken cancellationToken = default);
-        Task<User?> GetUserInfoAsync(CancellationToken cancellationToken = default);
+        Task<AccountResult> RegisterAsync(RegisterModel model,
+            CancellationToken cancellationToken = default);
+
+        Task<LoginResult> LoginAsync(LoginModel model,
+            CancellationToken cancellationToken = default);
+
+        Task<User?> GetUserInfoAsync(
+            CancellationToken cancellationToken = default);
     }
 }

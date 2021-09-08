@@ -2,7 +2,8 @@
 using FluentMigrator;
 using Logic.Users.Options;
 using static Logic.Users.DataAccess.Database.Configuration.DatabaseNames;
-using static Logic.Users.DataAccess.Database.Configuration.DatabaseNames.UsersColumns;
+using static Logic.Users.DataAccess.Database.Configuration.DatabaseNames.
+    UsersColumns;
 
 namespace Logic.Users.DataAccess.Database.FluentMigrations
 {
@@ -20,7 +21,8 @@ namespace Logic.Users.DataAccess.Database.FluentMigrations
                 .AsString(UserConfigurationOptions.UserFIOMaxLength + 1)
                 .NotNullable()
                 .WithColumn(Phone)
-                .AsFixedLengthAnsiString(UserConfigurationOptions.UserPhoneMaxLength)
+                .AsFixedLengthAnsiString(UserConfigurationOptions
+                    .UserPhoneMaxLength)
                 .NotNullable()
                 .Unique()
                 .WithColumn(Email)

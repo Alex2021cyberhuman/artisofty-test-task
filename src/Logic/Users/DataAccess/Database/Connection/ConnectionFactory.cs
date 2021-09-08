@@ -9,7 +9,8 @@ namespace Logic.Users.DataAccess.Database.Connection
     {
         private readonly IOptionsMonitor<DataAccessOptions> _optionsMonitor;
 
-        public ConnectionFactory(IOptionsMonitor<DataAccessOptions> optionsMonitor)
+        public ConnectionFactory(
+            IOptionsMonitor<DataAccessOptions> optionsMonitor)
         {
             _optionsMonitor = optionsMonitor;
         }
@@ -19,7 +20,8 @@ namespace Logic.Users.DataAccess.Database.Connection
             var actualOptions = _optionsMonitor.CurrentValue;
             if (!actualOptions.UseDatabase)
                 throw new InvalidOperationException();
-            var connectionString = actualOptions.DatabaseOptions.ConnectionString;
+            var connectionString =
+                actualOptions.DatabaseOptions.ConnectionString;
             var connection = new NpgsqlConnection(connectionString);
             return connection;
         }

@@ -1,8 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Api.Areas.Api.Authorization;
+using Api.Areas.Api.Authorization.Interfaces;
 using Api.Areas.Api.Models;
 using Api.Authorization;
-using Api.Authorization.Interfaces;
 using AutoMapper;
 using Logic.Accounts.Interfaces;
 using Logic.Accounts.Models;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.Options;
 
 namespace Api.Areas.Api
 {
+    [Area("Api")]
     [ApiController]
     [Route("api/account")]
     public class AccountApiController : ControllerBase
@@ -23,7 +25,9 @@ namespace Api.Areas.Api
         private readonly IJwtLoginProcessor _processor;
         private readonly JwtWriteOptions _jwtWriteOptions;
 
-        public AccountApiController(IAccountManager accountManager, IMapper mapper, IJwtLoginProcessor processor, IOptions<JwtWriteOptions> jwtOptionsHolder)
+        public AccountApiController(IAccountManager accountManager,
+            IMapper mapper, IJwtLoginProcessor processor,
+            IOptions<JwtWriteOptions> jwtOptionsHolder)
         {
             _accountManager = accountManager;
             _mapper = mapper;
@@ -42,17 +46,21 @@ namespace Api.Areas.Api
         /// <param name="cancellationToken"></param>
         /// <response code="200">Returns user info</response>
         /// <returns>Information about user such as FIO, phone, email and last login time</returns>
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes =
+            JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("get-my-info")]
-        [ProducesResponseType(typeof(UserInfoResponse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetMyInfo(CancellationToken cancellationToken)
+        [ProducesResponseType(typeof(UserInfoResponse),
+            StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetMyInfo(
+            CancellationToken cancellationToken)
         {
-            var userInfo = await _accountManager.GetUserInfoAsync(cancellationToken);
+            var userInfo =
+                await _accountManager.GetUserInfoAsync(cancellationToken);
             if (userInfo is null)
                 return Unauthorized();
             return Ok(_mapper.Map<UserInfoResponse>(userInfo));
         }
-        
+
         /// <summary>
         /// Sign out user
         /// </summary>
@@ -63,7 +71,8 @@ namespace Api.Areas.Api
         /// </remarks>
         /// <response code="200">Successful sign out</response>
         /// <returns>Empty response</returns>
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes =
+            JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("logout")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult Logout()
@@ -74,7 +83,7 @@ namespace Api.Areas.Api
                     _jwtWriteOptions.CookieOptions);
             return Ok();
         }
-        
+
         /// <summary>
         /// Sign up user
         /// </summary>
@@ -96,11 +105,16 @@ namespace Api.Areas.Api
         /// <returns>Empty response</returns>
         [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Register([FromBody] RegisterRequest model, CancellationToken cancellationToken)
+        [ProducesResponseType(typeof(ErrorResponse),
+            StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Register(
+            [FromBody] RegisterRequest model,
+            CancellationToken cancellationToken)
         {
             var registerRequest = _mapper.Map<RegisterModel>(model);
-            var result = await _accountManager.RegisterAsync(registerRequest, cancellationToken);
+            var result =
+                await _accountManager.RegisterAsync(registerRequest,
+                    cancellationToken);
             if (result.IsSuccessful)
                 return Ok();
 
@@ -124,24 +138,31 @@ namespace Api.Areas.Api
         /// <returns>Empty response with Set-Cookie header that contains access token</returns>
         [HttpPost("login-cookie")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> LoginCookie([FromBody] LoginRequest model, CancellationToken cancellationToken)
+        [ProducesResponseType(typeof(ErrorResponse),
+            StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> LoginCookie(
+            [FromBody] LoginRequest model, CancellationToken cancellationToken)
         {
             var loginRequest = _mapper.Map<LoginModel>(model);
-            var result = await _accountManager.LoginAsync(loginRequest, cancellationToken);
+            var result =
+                await _accountManager.LoginAsync(loginRequest,
+                    cancellationToken);
 
             if (result.IsSuccessful)
             {
-                var jwtResult = await _processor.ProcessLoginAsync(result.User!, cancellationToken);
+                var jwtResult =
+                    await _processor.ProcessLoginAsync(result.User!,
+                        cancellationToken);
                 var cookies = HttpContext.Response.Cookies;
-                cookies.Append(_jwtWriteOptions.AccessTokenCookieName, jwtResult.AccessToken, _jwtWriteOptions.CookieOptions);
+                cookies.Append(_jwtWriteOptions.AccessTokenCookieName,
+                    jwtResult.AccessToken, _jwtWriteOptions.CookieOptions);
                 return Ok();
             }
 
             return BadRequest(_mapper.Map<ErrorResponse>(result));
         }
-        
-        
+
+
         /// <summary>
         /// Sign in user
         /// </summary>
@@ -159,15 +180,21 @@ namespace Api.Areas.Api
         /// <returns>Response with access token and expiration time</returns>
         [HttpPost("login")]
         [ProducesResponseType(typeof(TokenResponse), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Login([FromBody] LoginRequest model, CancellationToken cancellationToken)
+        [ProducesResponseType(typeof(ErrorResponse),
+            StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Login([FromBody] LoginRequest model,
+            CancellationToken cancellationToken)
         {
             var loginRequest = _mapper.Map<LoginModel>(model);
-            var result = await _accountManager.LoginAsync(loginRequest, cancellationToken);
+            var result =
+                await _accountManager.LoginAsync(loginRequest,
+                    cancellationToken);
 
             if (result.IsSuccessful)
             {
-                var jwtResult = await _processor.ProcessLoginAsync(result.User!, cancellationToken);
+                var jwtResult =
+                    await _processor.ProcessLoginAsync(result.User!,
+                        cancellationToken);
                 return Ok(_mapper.Map<TokenResponse>(jwtResult));
             }
 

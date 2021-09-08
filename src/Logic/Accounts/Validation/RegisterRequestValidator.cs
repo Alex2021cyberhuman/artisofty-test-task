@@ -14,13 +14,17 @@ namespace Logic.Accounts.Validation
                 .NotEmpty()
                 .MaximumLength(UserConfigurationOptions.UserPhoneMaxLength)
                 .Matches(UserConfigurationOptions.UserPhoneRegex)
-                .SetAsyncValidator(new PhoneUniqueAsyncValidator<RegisterModel>(userRepository));
+                .SetAsyncValidator(
+                    new PhoneUniqueAsyncValidator<RegisterModel>(
+                        userRepository));
 
             RuleFor(request => request.Email)
                 .NotEmpty()
                 .MaximumLength(UserConfigurationOptions.UserEmailMaxLength)
                 .EmailAddress()
-                .SetAsyncValidator(new EmailUniqueAsyncValidator<RegisterModel>(userRepository));
+                .SetAsyncValidator(
+                    new EmailUniqueAsyncValidator<RegisterModel>(
+                        userRepository));
 
             RuleFor(request => request.Password)
                 .NotEmpty()
