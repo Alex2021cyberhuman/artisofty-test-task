@@ -1,0 +1,84 @@
+﻿@inject IViewLocalizer _localizer
+@{
+    var isLoggedIn = User.Identity?.IsAuthenticated ?? false;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link crossorigin="anonymous"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+        rel="stylesheet">
+    <title>@(ViewData.TryGetValue("Title", out var title) ? title : _localizer.GetString("DefaultTitle"))</title>
+</head>
+<body>
+<nav class="bg-dark fixed-top navbar navbar-dark navbar-expand-md">
+    <div class="container">
+        <a asp-action="Index"
+            asp-controller="Home"
+            class="navbar-brand">
+            @_localizer.GetString("DefaultTitle")
+        </a>
+        <button aria-controls="navbar-main"
+            aria-expanded="false"
+            aria-label="@_localizer.GetString("ToggleNavigation")"
+            class="navbar-toggler"
+            data-target="#navbar-main"
+            data-toggle="collapse"
+            type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse"
+            id="navbar-main">
+            <ul class="mr-auto navbar-nav">
+                <li class="nav-item">
+                    <a asp-action="Index"
+                        asp-controller="Home"
+                        class="nav-link">
+                        @_localizer.GetString("Home")
+                    </a>
+                </li>
+                @if (isLoggedIn)
+                {
+                    <li class="nav-item">
+                        <a asp-action="Index"
+                            asp-controller="Cabinet"
+                            class="nav-link">
+                            @_localizer.GetString("Cabinet")
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a asp-action="Login"
+                            asp-controller="Account"
+                            class="nav-link">
+                            @_localizer.GetString("Login")
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-action="Register"
+                            asp-controller="Account"
+                            class="nav-link">
+                            @_localizer.GetString("Register")
+                        </a>
+                    </li>
+                }
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<main class="container"
+    role="main">
+    @RenderBody()
+</main>
+<script crossorigin="anonymous"
+    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+    src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script crossorigin="anonymous"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

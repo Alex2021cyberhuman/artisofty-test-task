@@ -23,7 +23,10 @@ namespace Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddLocalization(options =>
+                options.ResourcesPath = "Resources");
+            services.AddControllersWithViews()
+                .AddViewLocalization();
 
             services.AddDataAccessServices(options =>
                 _configuration.Bind("DataAccess", options));
@@ -62,9 +65,10 @@ namespace Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "MyArea",
-                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapControllers();
+                    "MyArea",
+                    "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("default",
+                    "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
