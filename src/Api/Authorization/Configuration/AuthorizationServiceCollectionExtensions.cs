@@ -3,6 +3,7 @@ using Api.Areas.Api.Authorization;
 using Api.Areas.Api.Authorization.Interfaces;
 using Api.Authorization.Interfaces;
 using Logic.Accounts.Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -29,7 +30,11 @@ namespace Api.Authorization.Configuration
                 .AddScoped<IJwtLoginProcessor, JwtLoginProcessor>()
                 .AddAccountsServices()
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddCookie()
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+                    options =>
+                    {
+                        options.LoginPath = "/Account/Login";
+                    })
                 .AddJwtBearer(options =>
                 {
                     options.Events = new()

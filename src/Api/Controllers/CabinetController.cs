@@ -1,12 +1,13 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Api.Controllers;
 using AutoMapper;
 using Logic.Accounts.Interfaces;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Areas.Api
+namespace Api.Controllers
 {
     public class CabinetController : Controller
     {
@@ -19,12 +20,24 @@ namespace Api.Areas.Api
             _mapper = mapper;
         }
 
-        [Authorize]
-        public async Task<IActionResult> Index(CancellationToken cancellationToken)
+        [Authorize(AuthenticationSchemes =
+            CookieAuthenticationDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> Index(
+            CancellationToken cancellationToken)
         {
-            var user = await _accountManager.GetUserInfoAsync(cancellationToken);
+            var user =
+                await _accountManager.GetUserInfoAsync(cancellationToken);
             var model = _mapper.Map<CabinetViewModel>(user);
             return View(model);
+        }
+
+        [Authorize(AuthenticationSchemes =
+            CookieAuthenticationDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults
+                .AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
         }
     }
 }

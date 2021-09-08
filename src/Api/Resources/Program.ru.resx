@@ -26,9 +26,6 @@
     <data name="DefaultTitle" xml:space="preserve">
         <value>Тестовое Бакенд</value>
     </data>
-    <data name="ToggleNavigation" xml:space="preserve">
-        <value>Активировать навигацию</value>
-    </data>
     <data name="Home" xml:space="preserve">
         <value>Главная</value>
     </data>
@@ -40,5 +37,35 @@
     </data>
     <data name="Register" xml:space="preserve">
         <value>Регистрация</value>
+    </data>
+    <data name="FIO" xml:space="preserve">
+        <value>ФИО</value>
+    </data>
+    <data name="Confirm Password" xml:space="preserve">
+        <value>Подтвердите пароль</value>
+    </data>
+    <data name="Password" xml:space="preserve">
+        <value>Пароль</value>
+    </data>
+    <data name="Email" xml:space="preserve">
+        <value>Электронная почта</value>
+    </data>
+    <data name="Phone" xml:space="preserve">
+        <value>Номер телефона</value>
+    </data>
+    <data name="Submit registration" xml:space="preserve">
+        <value>Подтвердить регистрацию</value>
+    </data>
+    <data name="Congratulations, {0}, you have become a user of the system!" xml:space="preserve">
+        <value>Поздравляем, {0}, вы стали пользователем системы !</value>
+    </data>
+    <data name="Submit login" xml:space="preserve">
+        <value>Подтвердить вход</value>
+    </data>
+    <data name="Last login" xml:space="preserve">
+        <value>Время последнего входа</value>
+    </data>
+    <data name="Logout" xml:space="preserve">
+        <value>Выход</value>
     </data>
 </root>

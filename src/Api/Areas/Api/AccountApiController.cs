@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Api.Areas.Api.Authorization;
 using Api.Areas.Api.Authorization.Interfaces;
 using Api.Areas.Api.Models;
-using Api.Authorization;
 using AutoMapper;
 using Logic.Accounts.Interfaces;
 using Logic.Accounts.Models;

@@ -1,0 +1,7 @@
+﻿@model Api.Controllers.RegisterViewModel
+@inject IStringLocalizer<Program> _localizer
+<h3>@(string.Format(_localizer.GetString("Congratulations, {0}, you have become user of system!"), Model!.FIO))</h3>
+<a asp-action="Login"
+    class="btn btn-primary">
+    @_localizer.GetString("Login")
+</a>

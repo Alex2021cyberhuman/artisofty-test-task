@@ -8,41 +8,29 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Logic\Logic.csproj" />
+        <ProjectReference Include="..\Logic\Logic.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0-preview.7.21378.6" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.1" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0-preview.7.21378.6"/>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.0-preview.7.21378.6"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.1"/>
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Update="Resources\Views\Shared\_Layout.en.resx">
+        <EmbeddedResource Update="Resources\Program.ru.resx">
             <Generator>ResXFileCodeGenerator</Generator>
-            <LastGenOutput>_Layout.en.Designer.cs</LastGenOutput>
-        </EmbeddedResource>
-        <EmbeddedResource Update="Resources\Views\Shared\_Layout.ru.resx">
-            <Generator>ResXFileCodeGenerator</Generator>
-            <LastGenOutput>_Layout.ru.Designer.cs</LastGenOutput>
+            <LastGenOutput>Program.ru.Designer.cs</LastGenOutput>
         </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Update="Resources\Views\Shared\_Layout.en.Designer.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>_Layout.en.resx</DependentUpon>
-        </Compile>
-        <Compile Update="Resources\Views\Shared\_Layout.ru.Designer.cs">
+        <Compile Update="Resources\Program.ru.Designer.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
             <DependentUpon>_Layout.ru.resx</DependentUpon>
         </Compile>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="wwwroot" />
     </ItemGroup>
 
 </Project>

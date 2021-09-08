@@ -1,7 +1,6 @@
 ﻿using System;
 using Api.Areas.Api.Authorization;
 using Api.Areas.Api.Models;
-using Api.Authorization;
 using AutoMapper;
 using Logic.Accounts.Models;
 using Logic.Users.Models;

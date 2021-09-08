@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Api.Resources.Views.Shared {
+namespace Api.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Api.Resources.Views.Shared {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class _Layout_ru {
+    internal class Program_ru {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal _Layout_ru() {
+        internal Program_ru() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Api.Resources.Views.Shared {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Api.Resources.Views.Shared._Layout.ru", typeof(_Layout_ru).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Api.Resources.Program.ru", typeof(Program_ru).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -70,11 +70,47 @@ namespace Api.Resources.Views.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Подтвердите пароль.
+        /// </summary>
+        internal static string Confirm_Password {
+            get {
+                return ResourceManager.GetString("Confirm Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Поздравляем, {0}, вы стали пользователем системы !.
+        /// </summary>
+        internal static string Congratulations___0___you_have_become_a_user_of_the_system_ {
+            get {
+                return ResourceManager.GetString("Congratulations, {0}, you have become a user of the system!", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Тестовое Бакенд.
         /// </summary>
         internal static string DefaultTitle {
             get {
                 return ResourceManager.GetString("DefaultTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Электронная почта.
+        /// </summary>
+        internal static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ФИО.
+        /// </summary>
+        internal static string FIO {
+            get {
+                return ResourceManager.GetString("FIO", resourceCulture);
             }
         }
         
@@ -88,11 +124,47 @@ namespace Api.Resources.Views.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Время последнего входа.
+        /// </summary>
+        internal static string Last_login {
+            get {
+                return ResourceManager.GetString("Last login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Вход.
         /// </summary>
         internal static string Login {
             get {
                 return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Выход.
+        /// </summary>
+        internal static string Logout {
+            get {
+                return ResourceManager.GetString("Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Пароль.
+        /// </summary>
+        internal static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Номер телефона.
+        /// </summary>
+        internal static string Phone {
+            get {
+                return ResourceManager.GetString("Phone", resourceCulture);
             }
         }
         
@@ -106,11 +178,20 @@ namespace Api.Resources.Views.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Активировать навигацию.
+        ///   Looks up a localized string similar to Подтвердить вход.
         /// </summary>
-        internal static string ToggleNavigation {
+        internal static string Submit_login {
             get {
-                return ResourceManager.GetString("ToggleNavigation", resourceCulture);
+                return ResourceManager.GetString("Submit login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Подтвердить регистрацию.
+        /// </summary>
+        internal static string Submit_registration {
+            get {
+                return ResourceManager.GetString("Submit registration", resourceCulture);
             }
         }
     }

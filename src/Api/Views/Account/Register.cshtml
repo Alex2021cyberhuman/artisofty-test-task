@@ -1,1 +1,71 @@
-﻿
+﻿@model Api.Controllers.RegisterViewModel
+@inject IStringLocalizer<Program> _localizer
+<h2>@_localizer.GetString("Register")</h2>
+<form asp-action="Register"
+    asp-controller="Account"
+    class="d-flex row"
+    method="post">
+    <div asp-validation-summary="ModelOnly"
+        class="text-danger">
+    </div>
+    <div class="form-group">
+        <label asp-for="FIO"
+            class="form-label">
+            @_localizer.GetString("FIO")
+        </label>
+        <input asp-for="FIO"
+            class="form-control">
+        <span asp-validation-for="FIO"
+            class="text-danger">
+        </span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Phone"
+            class="form-label">
+            @_localizer.GetString("Phone")
+        </label>
+        <input asp-for="Phone"
+            class="form-control">
+        <span asp-validation-for="Phone"
+            class="text-danger">
+        </span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"
+            class="form-label">
+            @_localizer.GetString("Email")
+        </label>
+        <input asp-for="Email"
+            class="form-control"
+            type="email">
+        <span asp-validation-for="Email"
+            class="text-danger">
+        </span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password"
+            class="form-label">
+            @_localizer.GetString("Password")
+        </label>
+        <input asp-for="Password"
+            class="form-control">
+        <span asp-validation-for="Password"
+            class="text-danger">
+        </span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PasswordConfirm"
+            class="form-label">
+            @_localizer.GetString("Confirm Password")
+        </label>
+        <input asp-for="PasswordConfirm"
+            class="form-control">
+        <span asp-validation-for="PasswordConfirm"
+            class="text-danger">
+        </span>
+    </div>
+    <button class="btn btn-primary mx-auto my-5"
+        type="submit">
+        @_localizer.GetString("Submit registration")
+    </button>
+</form>

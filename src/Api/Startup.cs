@@ -14,19 +14,27 @@ namespace Api
     public class Startup
     {
         private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _environment;
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration,
+            IWebHostEnvironment environment)
         {
             _configuration = configuration;
+            _environment = environment;
             _configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddLocalization(options =>
-                options.ResourcesPath = "Resources");
-            services.AddControllersWithViews()
+            {
+                options.ResourcesPath = "Resources";
+            });
+            var mvcBuilder = services.AddControllersWithViews()
                 .AddViewLocalization();
+
+            if (_environment.IsDevelopment())
+                mvcBuilder.AddRazorRuntimeCompilation();
 
             services.AddDataAccessServices(options =>
                 _configuration.Bind("DataAccess", options));
@@ -51,6 +59,8 @@ namespace Api
             else
                 app.UseHsts();
 
+            app.UseStaticFiles();
+
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
@@ -58,6 +68,11 @@ namespace Api
             });
 
             app.UseRouting();
+
+            app.UseCors(options =>
+                options.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
 
             app.UseAuthentication();
             app.UseAuthorization();
