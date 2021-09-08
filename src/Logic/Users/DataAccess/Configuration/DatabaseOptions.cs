@@ -1,4 +1,4 @@
-﻿namespace Logic.Users.DataAccess.Database.DbContexts
+﻿namespace Logic.Users.DataAccess.Configuration
 {
     public class DatabaseOptions
     {

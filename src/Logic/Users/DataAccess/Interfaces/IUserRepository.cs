@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Logic.Users.Models;
 
@@ -47,7 +48,9 @@ namespace Logic.Users.DataAccess.Interfaces
         /// <param name="password">User password <see cref="User.Password"/></param>
         /// <param name="cancellationToken">Asynchronous task cancellation</param>
         /// <returns>Task with founded user or null as result</returns>
-        Task<User?> TryLoginAsync(string phone, string password, CancellationToken cancellationToken = default);
+        Task<User?> FindUserByPhonePasswordAsync(string phone, string password, CancellationToken cancellationToken = default);
+
+        Task UpdateLastLoginAsync(int userId, DateTime lastLogin, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Tries to find user with this id,

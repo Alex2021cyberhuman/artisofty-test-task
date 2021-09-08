@@ -9,7 +9,7 @@ namespace Logic.Accounts.Validation
     public class PhoneUniqueAsyncValidator<T> : AsyncPropertyValidator<T, string>
     {
         public const string PhoneUniqueAsyncValidatorName = "PhoneUniqueAsyncValidator";
-        
+
         private readonly IUserRepository _userRepository;
 
         public PhoneUniqueAsyncValidator(IUserRepository userRepository)
@@ -17,10 +17,15 @@ namespace Logic.Accounts.Validation
             _userRepository = userRepository;
         }
 
-        protected override string GetDefaultMessageTemplate(string errorCode) => "{PropertyName} must be unique.";
+        protected override string GetDefaultMessageTemplate(string errorCode)
+        {
+            return "{PropertyName} must be unique.";
+        }
 
-        public override async Task<bool> IsValidAsync(ValidationContext<T> context, string value, CancellationToken cancellation) =>
-            await _userRepository.CheckUniquePhoneAsync(value, cancellation);
+        public override async Task<bool> IsValidAsync(ValidationContext<T> context, string value, CancellationToken cancellation)
+        {
+            return await _userRepository.CheckUniquePhoneAsync(value, cancellation);
+        }
 
 
         public override string Name => PhoneUniqueAsyncValidatorName;

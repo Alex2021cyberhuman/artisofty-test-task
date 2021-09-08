@@ -1,6 +1,5 @@
 ﻿using System;
-using Logic.Users.DataAccess.Database;
-using Logic.Users.DataAccess.Database.DbContexts;
+using Logic.Users.DataAccess.Configuration;
 using Logic.Users.DataAccess.Interfaces;
 using Logic.Users.DataAccess.Mock;
 
@@ -9,19 +8,24 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class DataAccessServiceCollectionExtensions
     {
-        public static IServiceCollection AddDataAccessServices(this IServiceCollection serviceCollection, Action<DataAccessOptions>? optionsAction)
+        public static IServiceCollection AddDataAccessServices(this IServiceCollection services, Action<DataAccessOptions>? optionsAction)
         {
             optionsAction ??= _ => { };
             var dataAccessOptions = DataAccessOptions.Default;
+            services.Configure<DataAccessOptions>(options => optionsAction(options));
             optionsAction(dataAccessOptions);
 
+            
             if (dataAccessOptions.UseDatabase)
             {
-                throw new NotImplementedException("PostgreSqlUserRepository isn't implemented");
+                services.AddDatabaseDataAccessServices(dataAccessOptions);
             }
-            serviceCollection.AddSingleton<IUserRepository, MockUserRepository>();
+            else
+            {
+                services.AddSingleton<IUserRepository, MockUserRepository>();
+            }
 
-            return serviceCollection;
+            return services;
         }
     }
 }

@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Logic.Users.DataAccess.Interfaces;
 using Logic.Users.Models;
-using Logic.Users.Utilities;
 
 namespace Logic.Users.DataAccess.Mock
 {
@@ -34,15 +33,26 @@ namespace Logic.Users.DataAccess.Mock
             return Task.FromResult(_dictionary.Values.All(user => user.Email != email));
         }
 
-        public Task<User?> TryLoginAsync(string phone, string password,
+        public Task<User?> FindUserByPhonePasswordAsync(string phone, string password,
             CancellationToken cancellationToken = default)
         {
-            var user = _dictionary.Values.FirstOrDefault(user => user.Phone == phone && user.Password == password);
+            var foundUser = _dictionary.Values.FirstOrDefault(user => user.Phone == phone && user.Password == password);
+            return foundUser is null
+                ? Task.FromResult<User?>(null)
+                : Task.FromResult<User?>(foundUser);
+        }
+
+        public Task UpdateLastLoginAsync(int userId, DateTime lastLogin, CancellationToken cancellationToken = default)
+        {
+            var user = _dictionary.GetValueOrDefault(userId);
             if (user is null)
-                return Task.FromResult<User?>(null);
-            user = UserMutationHelper.GetUserWithUpdatedLastLogin(DateTime.UtcNow, user);
+                return Task.CompletedTask;
+            user = user with
+            {
+                LastLogin = DateTime.UtcNow
+            };
             _dictionary[user.Id] = user;
-            return Task.FromResult<User?>(user);
+            return Task.CompletedTask;
         }
 
         public Task<User?> FindUserByIdAsync(int id, CancellationToken cancellationToken)
@@ -54,7 +64,7 @@ namespace Logic.Users.DataAccess.Mock
         {
             return user with
             {
-                Id = _dictionary.Keys.Max() + 1
+                Id = _dictionary.Any() ? _dictionary.Keys.Max() + 1 : 1
             };
         }
     }

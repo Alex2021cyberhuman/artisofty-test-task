@@ -8,7 +8,7 @@ namespace Logic.Accounts.Mapping
     {
         public AccountsProfile()
         {
-            CreateMap<RegisterRequest, User>();
+            CreateMap<RegisterModel, User>();
         }
     }
 }
