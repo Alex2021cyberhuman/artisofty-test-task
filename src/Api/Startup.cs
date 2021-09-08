@@ -22,13 +22,20 @@ namespace Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllers();
 
             services.AddDataAccessServices(options => _configuration.Bind("DataAccess", options));
 
             services.AddAutoMapper(typeof(AccountsProfile).Assembly, Assembly.GetExecutingAssembly());
 
-            services.AddValidatorsFromAssemblies(new[] {typeof(RegisterRequestValidator).Assembly});
+            services.AddValidatorsFromAssemblies(new[]
+            {
+                typeof(RegisterRequestValidator).Assembly
+            });
+
+            services.AddCustomAuthorization(_configuration);
+
+            services.AddCustomSwagger();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -39,24 +46,18 @@ namespace Api
             }
             else
             {
-                app.UseHttpsRedirection();
-                app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-            
-            app.UseStaticFiles();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(options => { options.SwaggerEndpoint("v1/swagger.json", "TestBack v1"); });
 
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    "default",
-                    "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }
