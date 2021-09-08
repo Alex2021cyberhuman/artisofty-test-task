@@ -13,36 +13,45 @@ namespace Logic.Users.DataAccess.Mock
     {
         private readonly ConcurrentDictionary<int, User> _dictionary = new();
 
-        public Task<User> CreateUserAsync(User user, CancellationToken cancellationToken = default)
+        public Task<User> CreateUserAsync(User user,
+            CancellationToken cancellationToken = default)
         {
             if (user.Id == default)
                 user = GetUserWithNextId(user);
 
             return _dictionary.TryAdd(user.Id, user)
                 ? Task.FromResult(user)
-                : throw new InvalidOperationException("Cannot write to user dictionary");
+                : throw new InvalidOperationException(
+                    "Cannot write to user dictionary");
         }
 
-        public Task<bool> CheckUniquePhoneAsync(string phone, CancellationToken cancellationToken = default)
-        {
-            return Task.FromResult(_dictionary.Values.All(user => user.Phone != phone));
-        }
-
-        public Task<bool> CheckUniqueEmailAsync(string email, CancellationToken cancellationToken = default)
-        {
-            return Task.FromResult(_dictionary.Values.All(user => user.Email != email));
-        }
-
-        public Task<User?> FindUserByPhonePasswordAsync(string phone, string password,
+        public Task<bool> CheckUniquePhoneAsync(string phone,
             CancellationToken cancellationToken = default)
         {
-            var foundUser = _dictionary.Values.FirstOrDefault(user => user.Phone == phone && user.Password == password);
+            return Task.FromResult(
+                _dictionary.Values.All(user => user.Phone != phone));
+        }
+
+        public Task<bool> CheckUniqueEmailAsync(string email,
+            CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult(
+                _dictionary.Values.All(user => user.Email != email));
+        }
+
+        public Task<User?> FindUserByPhonePasswordAsync(string phone,
+            string password,
+            CancellationToken cancellationToken = default)
+        {
+            var foundUser = _dictionary.Values.FirstOrDefault(user =>
+                user.Phone == phone && user.Password == password);
             return foundUser is null
                 ? Task.FromResult<User?>(null)
                 : Task.FromResult<User?>(foundUser);
         }
 
-        public Task UpdateLastLoginAsync(int userId, DateTime lastLogin, CancellationToken cancellationToken = default)
+        public Task UpdateLastLoginAsync(int userId, DateTime lastLogin,
+            CancellationToken cancellationToken = default)
         {
             var user = _dictionary.GetValueOrDefault(userId);
             if (user is null)
@@ -55,7 +64,8 @@ namespace Logic.Users.DataAccess.Mock
             return Task.CompletedTask;
         }
 
-        public Task<User?> FindUserByIdAsync(int id, CancellationToken cancellationToken)
+        public Task<User?> FindUserByIdAsync(int id,
+            CancellationToken cancellationToken)
         {
             return Task.FromResult(_dictionary.GetValueOrDefault(id));
         }

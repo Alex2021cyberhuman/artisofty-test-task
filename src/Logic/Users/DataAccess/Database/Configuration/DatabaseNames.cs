@@ -3,7 +3,7 @@
     public static class DatabaseNames
     {
         public const string UsersTable = "\"User\"";
-        
+
         public static class UsersColumns
         {
             /// <summary>

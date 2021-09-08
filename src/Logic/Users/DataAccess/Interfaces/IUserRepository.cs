@@ -15,7 +15,8 @@ namespace Logic.Users.DataAccess.Interfaces
         /// <param name="user">User model to create</param>
         /// <param name="cancellationToken">Asynchronous task cancellation</param>
         /// <returns>Task with created user as result</returns>
-        Task<User> CreateUserAsync(User user, CancellationToken cancellationToken = default);
+        Task<User> CreateUserAsync(User user,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Checks if specified <paramref name="phone"/> is unique,
@@ -25,7 +26,8 @@ namespace Logic.Users.DataAccess.Interfaces
         /// <param name="phone">User phone <see cref="User.Phone"/>.</param>
         /// <param name="cancellationToken">Asynchronous task cancellation</param>
         /// <returns>Task with true or false as result</returns>
-        Task<bool> CheckUniquePhoneAsync(string phone, CancellationToken cancellationToken = default);
+        Task<bool> CheckUniquePhoneAsync(string phone,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Checks if specified <paramref name="email"/> is unique,
@@ -35,7 +37,8 @@ namespace Logic.Users.DataAccess.Interfaces
         /// <param name="email">User email <see cref="User.Email"/>.</param>
         /// <param name="cancellationToken">Asynchronous task cancellation</param>
         /// <returns>Task with true or false as result</returns>
-        Task<bool> CheckUniqueEmailAsync(string email, CancellationToken cancellationToken = default);
+        Task<bool> CheckUniqueEmailAsync(string email,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Tries to find user with these <paramref name="phone"/> and <paramref name="password"/>,
@@ -48,9 +51,11 @@ namespace Logic.Users.DataAccess.Interfaces
         /// <param name="password">User password <see cref="User.Password"/></param>
         /// <param name="cancellationToken">Asynchronous task cancellation</param>
         /// <returns>Task with founded user or null as result</returns>
-        Task<User?> FindUserByPhonePasswordAsync(string phone, string password, CancellationToken cancellationToken = default);
+        Task<User?> FindUserByPhonePasswordAsync(string phone, string password,
+            CancellationToken cancellationToken = default);
 
-        Task UpdateLastLoginAsync(int userId, DateTime lastLogin, CancellationToken cancellationToken = default);
+        Task UpdateLastLoginAsync(int userId, DateTime lastLogin,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Tries to find user with this id,
@@ -60,6 +65,7 @@ namespace Logic.Users.DataAccess.Interfaces
         /// <param name="id"><see cref="User.Id"/></param>
         /// <param name="cancellationToken"></param>
         /// <returns>Task with founded user or null as result</returns>
-        Task<User?> FindUserByIdAsync(int id, CancellationToken cancellationToken = default);
+        Task<User?> FindUserByIdAsync(int id,
+            CancellationToken cancellationToken = default);
     }
 }

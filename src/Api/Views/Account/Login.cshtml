@@ -1,0 +1,37 @@
+﻿@model Api.Controllers.LoginViewModel
+@inject IStringLocalizer<Program> _localizer
+<h2>@_localizer.GetString("Login")</h2>
+<form asp-action="Login"
+    asp-controller="Account"
+    class="d-flex row"
+    method="post">
+    <div asp-validation-summary="ModelOnly"
+        class="text-danger">
+    </div>
+    <div class="form-group">
+        <label asp-for="Phone"
+            class="form-label">
+            @_localizer.GetString("Phone")
+        </label>
+        <input asp-for="Phone"
+            class="form-control">
+        <span asp-validation-for="Phone"
+            class="text-danger">
+        </span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password"
+            class="form-label">
+            @_localizer.GetString("Password")
+        </label>
+        <input asp-for="Password"
+            class="form-control">
+        <span asp-validation-for="Password"
+            class="text-danger">
+        </span>
+    </div>
+    <button class="btn btn-primary mx-auto my-5"
+        type="submit">
+        @_localizer.GetString("Submit login")
+    </button>
+</form>

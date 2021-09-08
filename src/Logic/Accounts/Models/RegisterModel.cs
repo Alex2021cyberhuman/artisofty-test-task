@@ -2,7 +2,8 @@
 {
     public record RegisterModel
     {
-        public RegisterModel(string fio, string phone, string email, string password, string passwordConfirm)
+        public RegisterModel(string fio, string phone, string email,
+            string password, string passwordConfirm)
         {
             FIO = fio;
             Phone = phone;

@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <data name="DefaultTitle" xml:space="preserve">
+        <value>Тестовое Бакенд</value>
+    </data>
+    <data name="Home" xml:space="preserve">
+        <value>Главная</value>
+    </data>
+    <data name="Cabinet" xml:space="preserve">
+        <value>Кабинет</value>
+    </data>
+    <data name="Login" xml:space="preserve">
+        <value>Вход</value>
+    </data>
+    <data name="Register" xml:space="preserve">
+        <value>Регистрация</value>
+    </data>
+    <data name="FIO" xml:space="preserve">
+        <value>ФИО</value>
+    </data>
+    <data name="Confirm Password" xml:space="preserve">
+        <value>Подтвердите пароль</value>
+    </data>
+    <data name="Password" xml:space="preserve">
+        <value>Пароль</value>
+    </data>
+    <data name="Email" xml:space="preserve">
+        <value>Электронная почта</value>
+    </data>
+    <data name="Phone" xml:space="preserve">
+        <value>Номер телефона</value>
+    </data>
+    <data name="Submit registration" xml:space="preserve">
+        <value>Подтвердить регистрацию</value>
+    </data>
+    <data name="Congratulations, {0}, you have become a user of the system!" xml:space="preserve">
+        <value>Поздравляем, {0}, вы стали пользователем системы !</value>
+    </data>
+    <data name="Submit login" xml:space="preserve">
+        <value>Подтвердить вход</value>
+    </data>
+    <data name="Last login" xml:space="preserve">
+        <value>Время последнего входа</value>
+    </data>
+    <data name="Logout" xml:space="preserve">
+        <value>Выход</value>
+    </data>
+</root>

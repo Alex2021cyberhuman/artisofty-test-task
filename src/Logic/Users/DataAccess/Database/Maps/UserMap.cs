@@ -1,6 +1,7 @@
 ﻿using Dapper.FluentMap.Mapping;
 using Logic.Users.Models;
-using static Logic.Users.DataAccess.Database.Configuration.DatabaseNames.UsersColumns;
+using static Logic.Users.DataAccess.Database.Configuration.DatabaseNames.
+    UsersColumns;
 
 namespace Logic.Users.DataAccess.Database.Maps
 {

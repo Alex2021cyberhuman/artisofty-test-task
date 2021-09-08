@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Logic.Users.Models;
 
-namespace Api.Authorization
+namespace Api.Authorization.Interfaces
 {
     public interface IClaimsFactory
     {
@@ -14,6 +14,7 @@ namespace Api.Authorization
         /// <param name="user"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<IEnumerable<Claim>> GetClaims(User user, CancellationToken cancellationToken = default);
+        Task<IEnumerable<Claim>> GetClaims(User user,
+            CancellationToken cancellationToken = default);
     }
 }

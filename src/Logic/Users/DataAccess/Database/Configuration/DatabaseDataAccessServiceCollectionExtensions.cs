@@ -13,13 +13,15 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class DatabaseDataAccessServiceCollectionExtensions
     {
-        public static IServiceCollection AddDatabaseDataAccessServices(this IServiceCollection services, DataAccessOptions options)
-        { 
+        public static IServiceCollection AddDatabaseDataAccessServices(
+            this IServiceCollection services, DataAccessOptions options)
+        {
             FluentMapper.Initialize(configuration =>
             {
                 configuration.AddMap(new UserMap());
             });
-            return services.AddSingleton<IConnectionFactory, ConnectionFactory>()
+            return services
+                .AddSingleton<IConnectionFactory, ConnectionFactory>()
                 .AddSingleton<IUserRepository, DbUserRepository>()
                 .AddFluentMigratorCore()
                 .ConfigureRunner(builder => builder

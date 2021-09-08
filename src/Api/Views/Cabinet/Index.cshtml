@@ -1,0 +1,37 @@
+﻿@model Api.Controllers.CabinetViewModel
+@inject IStringLocalizer<Program> _localizer
+<section class="d-flex row"
+    id="info">
+    <div class="col-md-4 fw-bold">
+        @_localizer.GetString("FIO"):
+    </div>
+    <div class="col-md-8">
+        @Model!.FIO
+    </div>
+    <div class="col-md-4 fw-bold">
+        @_localizer.GetString("Phone"):
+    </div>
+    <div class="col-md-8">
+        @Model!.Phone
+    </div>
+    <div class="col-md-4 fw-bold">
+        @_localizer.GetString("Email"):
+    </div>
+    <div class="col-md-8">
+        @Model!.Email
+    </div>
+    <div class="col-md-4 fw-bold">
+        @_localizer.GetString("Last login"):
+    </div>
+    <div class="col-md-8">
+        @Model!.LastLogin.ToLocalTime()
+    </div>
+    <form asp-action="Logout"
+        class="btn-group"
+        role="group">
+        <button class="btn btn-primary"
+            type="submit">
+            @_localizer.GetString("Logout")
+        </button>
+    </form>
+</section>

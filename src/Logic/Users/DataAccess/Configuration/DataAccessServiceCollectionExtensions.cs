@@ -8,22 +8,21 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class DataAccessServiceCollectionExtensions
     {
-        public static IServiceCollection AddDataAccessServices(this IServiceCollection services, Action<DataAccessOptions>? optionsAction)
+        public static IServiceCollection AddDataAccessServices(
+            this IServiceCollection services,
+            Action<DataAccessOptions>? optionsAction)
         {
             optionsAction ??= _ => { };
             var dataAccessOptions = DataAccessOptions.Default;
-            services.Configure<DataAccessOptions>(options => optionsAction(options));
+            services.Configure<DataAccessOptions>(options =>
+                optionsAction(options));
             optionsAction(dataAccessOptions);
 
-            
+
             if (dataAccessOptions.UseDatabase)
-            {
                 services.AddDatabaseDataAccessServices(dataAccessOptions);
-            }
             else
-            {
                 services.AddSingleton<IUserRepository, MockUserRepository>();
-            }
 
             return services;
         }

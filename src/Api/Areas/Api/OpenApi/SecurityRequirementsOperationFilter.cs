@@ -6,11 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Api.OpenApi
+namespace Api.Areas.Api.OpenApi
 {
     public class SecurityRequirementsOperationFilter : IOperationFilter
     {
-        public void Apply(OpenApiOperation operation, OperationFilterContext context)
+        public void Apply(OpenApiOperation operation,
+            OperationFilterContext context)
         {
             if (!CheckApiController(context))
                 return;
@@ -46,7 +47,7 @@ namespace Api.OpenApi
                         Id = JwtBearerDefaults.AuthenticationScheme
                     }
                 };
-                
+
                 operation.Security.Add(new()
                 {
                     [referenceScheme] = Array.Empty<string>()
@@ -54,11 +55,13 @@ namespace Api.OpenApi
             }
         }
 
-        private static bool CheckApiController(OperationFilterContext context) =>
-            context.MethodInfo.DeclaringType != null &&
-            context.MethodInfo.DeclaringType
-                .GetCustomAttributes(true)
-                .OfType<ApiControllerAttribute>()
-                .Any();
+        private static bool CheckApiController(OperationFilterContext context)
+        {
+            return context.MethodInfo.DeclaringType != null &&
+                   context.MethodInfo.DeclaringType
+                       .GetCustomAttributes(true)
+                       .OfType<ApiControllerAttribute>()
+                       .Any();
+        }
     }
 }

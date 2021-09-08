@@ -1,6 +1,6 @@
 ﻿using System;
+using Api.Areas.Api.Authorization;
 using Api.Areas.Api.Models;
-using Api.Authorization;
 using AutoMapper;
 using Logic.Accounts.Models;
 using Logic.Users.Models;
@@ -18,7 +18,9 @@ namespace Api.Areas.Api.Mapping
             CreateMap<JwtLoginResult, TokenResponse>()
                 .ForMember(tokenResponse => tokenResponse.Expires,
                     options => options.MapFrom(
-                        jwtLoginResult => new DateTimeOffset(jwtLoginResult.Expires).ToUnixTimeSeconds()));
+                        jwtLoginResult =>
+                            new DateTimeOffset(jwtLoginResult.Expires)
+                                .ToUnixTimeSeconds()));
         }
     }
 }

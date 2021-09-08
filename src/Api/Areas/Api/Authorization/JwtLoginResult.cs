@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Api.Authorization
+namespace Api.Areas.Api.Authorization
 {
     public record JwtLoginResult
     {
@@ -11,7 +11,7 @@ namespace Api.Authorization
         }
 
         public bool IsSuccessful => string.IsNullOrWhiteSpace(AccessToken);
-        
+
         public string AccessToken { get; init; }
 
         public DateTime Expires { get; init; }
